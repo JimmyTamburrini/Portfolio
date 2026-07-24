@@ -1,0 +1,4 @@
+JIMMY TAMBURRINI — RÉSUMÉ PLACEHOLDER
+
+Replace this file with Jimmy-Tamburrini-Resume.pdf and update resume in src/data/portfolio.ts.
+This transparent placeholder ensures the download action works without inventing personal history.
