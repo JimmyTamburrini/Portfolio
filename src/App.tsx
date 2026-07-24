@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Nav } from './components/layout/Nav';
 import { HeroScene } from './components/scene/HeroScene';
-import { SceneBoundary } from './components/scene/SceneBoundary';
 import { ProjectModal } from './components/projects/ProjectModal';
 import { About, Contact, Experience, WorkList } from './components/sections/ContentSections';
 import { personal, projects } from './data/portfolio';
@@ -24,9 +23,7 @@ export default function App() {
       <Nav />
       <main>
         <section id="top" className="hero">
-          <SceneBoundary>
-            <HeroScene onSelect={setSelected} paused={!!selected} reducedMotion={reduced} />
-          </SceneBoundary>
+          <HeroScene onSelect={setSelected} paused={!!selected} reducedMotion={reduced} />
           <div className="hero-vignette" />
           <motion.div
             className="hero-intro"

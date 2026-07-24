@@ -128,59 +128,6 @@ button {
 .scene:active {
   cursor: grabbing;
 }
-.scene-fallback {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  text-align: center;
-}
-.scene-fallback p {
-  position: absolute;
-  bottom: 18%;
-  color: #738198;
-  font:
-    400 9px DM Mono,
-    monospace;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.fallback-orb {
-  position: relative;
-  width: min(33vw, 430px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 37% 32%, rgba(80, 223, 255, 0.95), transparent 20%),
-    radial-gradient(circle at 65% 68%, rgba(255, 47, 176, 0.8), transparent 28%),
-    radial-gradient(circle at center, #5232c5, #101d47 60%, #07111f 72%);
-  box-shadow:
-    0 0 100px rgba(64, 117, 255, 0.35),
-    inset -35px -20px 70px rgba(2, 5, 15, 0.7),
-    inset 20px 10px 45px rgba(89, 230, 255, 0.28);
-}
-.fallback-orb:after {
-  content: '';
-  position: absolute;
-  inset: -3%;
-  border: 1px solid rgba(99, 230, 255, 0.35);
-  border-radius: inherit;
-  filter: blur(5px);
-}
-.fallback-orb i {
-  position: absolute;
-  inset: 15%;
-  border: 1px solid rgba(163, 206, 255, 0.24);
-  border-radius: 50%;
-  transform: rotate(35deg) scaleY(0.35);
-}
-.fallback-orb i:nth-child(2) {
-  transform: rotate(-40deg) scaleY(0.55);
-}
-.fallback-orb i:nth-child(3) {
-  transform: rotate(90deg) scaleY(0.72);
-}
 .hero-vignette {
   position: absolute;
   inset: 0;
