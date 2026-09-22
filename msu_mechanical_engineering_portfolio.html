@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimmy | MSU Mechanical Engineering Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        spartan: {
+                            DEFAULT: '#18453B', // Official MSU Spartan Green
+                            dark: '#0e2b25',
+                            light: '#225d50',
+                            accent: '#2c7a69',
+                            gold: '#C2A649',
+                            blueprint: '#0a192f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Blueprint & Technical Drafting Grid Styling */
+        .blueprint-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 10px, transparent 10px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 10px, transparent 10px);
+        }
+        .light .blueprint-grid {
+            background-image: 
+                linear-gradient(to right, rgba(24, 69, 59, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(24, 69, 59, 0.08) 1px, transparent 1px),
+                linear-gradient(to right, rgba(24, 69, 59, 0.03) 10px, transparent 10px),
+                linear-gradient(to bottom, rgba(24, 69, 59, 0.03) 10px, transparent 10px);
+        }
+        
+        .technical-card {
+            position: relative;
+            transition: all 0.2s ease-in-out;
+        }
+        .technical-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            border-top: 2px solid #2c7a69;
+            border-left: 2px solid #2c7a69;
+        }
+        .technical-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 8px; height: 8px;
+            border-bottom: 2px solid #2c7a69;
+            border-right: 2px solid #2c7a69;
+        }
+
+        .filter-btn.active {
+            background-color: #18453B;
+            color: #ffffff;
+            border-color: #18453B;
+        }
+
+        /* FEA Heatmap Spectrum simulation bar */
+        .fea-spectrum {
+            background: linear-gradient(90deg, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);
+            height: 4px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-spartan selection:text-white min-h-screen flex flex-col transition-colors duration-200 light:bg-slate-50 light:text-slate-900">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-slate-950/90 light:bg-white/90 backdrop-blur-md border-b border-slate-800 light:border-slate-200 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- MSU ME Brand Badge -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded bg-spartan flex items-center justify-center font-bold text-white text-base tracking-widest shadow-md border border-spartan-accent">
+                        ME
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-extrabold tracking-tight text-slate-100 light:text-slate-900 group-hover:text-spartan-accent transition">Jimmy | Mechanical Engineering</span>
+                        <span class="text-[10px] font-mono text-slate-400 light:text-slate-500">MSU Junior '26 | College of Engineering</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Links -->
+                <nav class="hidden md:flex items-center space-x-6 text-xs font-mono font-semibold uppercase tracking-wider">
+                    <a href="#about" class="text-slate-300 light:text-slate-600 hover:text-spartan-light light:hover:text-spartan transition">// About</a>
+                    <a href="#projects" class="text-slate-300 light:text-slate-600 hover:text-spartan-light light:hover:text-spartan transition">// Engineering Projects</a>
+                    <a href="#skills" class="text-slate-300 light:text-slate-600 hover:text-spartan-light light:hover:text-spartan transition">// Tools & Shop</a>
+                    <a href="#experience" class="text-slate-300 light:text-slate-600 hover:text-spartan-light light:hover:text-spartan transition">// Activities & Work</a>
+                    <a href="#contact" class="text-slate-300 light:text-slate-600 hover:text-spartan-light light:hover:text-spartan transition">// Contact</a>
+                </nav>
+
+                <!-- Action Controls -->
+                <div class="flex items-center space-x-3">
+                    <button id="theme-toggle" type="button" class="p-2 rounded-lg text-slate-400 hover:text-slate-100 light:hover:text-slate-800 transition" aria-label="Toggle Theme">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm"></i>
+                    </button>
+                    <a href="#projects" class="hidden sm:inline-flex px-3.5 py-1.5 text-xs font-mono font-bold rounded bg-spartan hover:bg-spartan-light text-white shadow transition border border-spartan-accent">
+                        <i class="fa-solid fa-cube mr-1.5"></i> View 5 Core Projects
+                    </a>
+                    <button id="mobile-menu-btn" type="button" class="md:hidden p-2 text-slate-400 hover:text-white" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-800 bg-slate-900 light:bg-slate-100 px-4 py-3 space-y-2 text-sm font-mono">
+            <a href="#about" class="mobile-nav-link block text-slate-300 light:text-slate-700 hover:text-spartan">About</a>
+            <a href="#projects" class="mobile-nav-link block text-slate-300 light:text-slate-700 hover:text-spartan">Engineering Projects</a>
+            <a href="#skills" class="mobile-nav-link block text-slate-300 light:text-slate-700 hover:text-spartan">Tools & Shop Skills</a>
+            <a href="#experience" class="mobile-nav-link block text-slate-300 light:text-slate-700 hover:text-spartan">Activities & Work</a>
+            <a href="#contact" class="mobile-nav-link block text-slate-300 light:text-slate-700 hover:text-spartan">Contact</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="hero" class="relative py-16 md:py-24 border-b border-slate-800 light:border-slate-200 blueprint-grid overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-7">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-spartan/30 light:bg-spartan/10 border border-spartan/50 text-spartan-light light:text-spartan text-xs font-mono font-medium mb-6">
+                            <i class="fa-solid fa-shield-halved text-spartan-gold"></i>
+                            <span>Junior Mechanical Engineering Student | Michigan State University</span>
+                        </div>
+
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white light:text-slate-900 tracking-tight leading-none mb-4">
+                            Jimmy
+                        </h1>
+                        <p class="text-lg sm:text-2xl text-spartan-accent font-mono mb-6 font-semibold">
+                            SolidWorks CAD // ANSYS FEA // Advanced Excel & VBA
+                        </p>
+
+                        <p class="text-slate-300 light:text-slate-600 leading-relaxed text-base sm:text-lg mb-8 max-w-2xl">
+                            Mechanical Engineering Junior at MSU specializing in <span class="text-white light:text-slate-900 font-semibold underline decoration-spartan">Baja SAE chassis design</span>, parametric <span class="text-white light:text-slate-900 font-semibold underline decoration-spartan">SolidWorks automation</span>, tolerance stack-up analysis matrices, and <span class="text-white light:text-slate-900 font-semibold underline decoration-spartan">Excel VBA engineering tools</span>.
+                        </p>
+
+                        <!-- Call to Actions -->
+                        <div class="flex flex-wrap items-center gap-4 mb-8">
+                            <a href="#projects" class="px-6 py-3 rounded bg-spartan hover:bg-spartan-light text-white font-mono font-semibold text-sm transition shadow-lg border border-spartan-accent flex items-center gap-2">
+                                <i class="fa-solid fa-compass-drafting"></i>
+                                <span>Inspect Visual Project Cards</span>
+                            </a>
+                            <a href="#" onclick="alert('Demo: Downloading Jimmy_MSU_Mechanical_Engineering_Junior_Resume.pdf'); return false;" class="px-6 py-3 rounded bg-slate-900 light:bg-slate-200 hover:bg-slate-800 light:hover:bg-slate-300 text-slate-200 light:text-slate-800 border border-slate-700 light:border-slate-300 font-mono font-semibold text-sm transition flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-red-400"></i>
+                                <span>Download Junior Resume</span>
+                            </a>
+                        </div>
+
+                        <!-- Quick Contact Bar -->
+                        <div class="flex flex-wrap items-center gap-6 text-slate-400 light:text-slate-600 text-xs font-mono">
+                            <a href="mailto:jimmy.me@msu.edu" class="hover:text-spartan-accent transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-envelope text-sm"></i> jimmy.me@msu.edu
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:text-spartan-accent transition flex items-center gap-1.5">
+                                <i class="fa-brands fa-linkedin text-sm"></i> linkedin.com/in/jimmy-msu-me
+                            </a>
+                            <span class="flex items-center gap-1.5 text-slate-500">
+                                <i class="fa-solid fa-location-dot text-sm text-spartan-accent"></i> East Lansing, MI
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Hero Graphic Window -->
+                    <div class="lg:col-span-5">
+                        <div class="technical-card bg-slate-900/90 light:bg-white border border-slate-800 light:border-slate-300 p-4 rounded-lg shadow-2xl">
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 light:border-slate-200 pb-2 mb-3">
+                                <span class="text-spartan-accent font-bold"><i class="fa-solid fa-car-side mr-1"></i> MSU BAJA SAE CHASSIS</span>
+                                <span>Junior ME 371 Design</span>
+                            </div>
+                            
+                            <div class="relative rounded overflow-hidden group border border-slate-800 light:border-slate-200 bg-slate-950">
+                                <svg class="w-full h-64 text-spartan-light/40 p-4" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Isometric Baja Roll Cage Geometry Graphic -->
+                                    <path d="M120 70 L280 70 L340 150 L300 240 L100 240 L60 150 Z" stroke="#18453B" stroke-width="2.5" fill="rgba(24,69,59,0.15)"/>
+                                    <path d="M120 70 L100 240" stroke="#2c7a69" stroke-width="2"/>
+                                    <path d="M280 70 L300 240" stroke="#2c7a69" stroke-width="2"/>
+                                    <path d="M60 150 L340 150" stroke="#C2A649" stroke-width="2" stroke-dasharray="4 2"/>
+                                    <path d="M120 70 L200 130 L280 70" stroke="#2c7a69" stroke-width="1.5"/>
+                                    <circle cx="200" cy="130" r="6" fill="#ef4444"/>
+                                    <text x="135" y="270" fill="#94a3b8" font-family="monospace" font-size="10">FEA Mesh: 86,400 Elements | SF = 2.1</text>
+                                </svg>
+                                
+                                <div class="absolute bottom-2 left-2 right-2 bg-slate-900/90 light:bg-slate-100/90 backdrop-blur p-2 rounded text-[11px] font-mono flex items-center justify-between border border-slate-700 light:border-slate-300">
+                                    <span class="text-slate-300 light:text-slate-700">SAE Baja Compliance</span>
+                                    <span class="text-spartan-accent font-bold">1018 Steel Tubing</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-2 mt-3 text-center text-[10px] font-mono text-slate-400">
+                                <div class="bg-slate-950 light:bg-slate-100 p-1.5 rounded border border-slate-800 light:border-slate-200">
+                                    <div class="text-spartan-accent font-bold">SolidWorks</div>
+                                    <div>3D Weldments</div>
+                                </div>
+                                <div class="bg-slate-950 light:bg-slate-100 p-1.5 rounded border border-slate-800 light:border-slate-200">
+                                    <div class="text-spartan-accent font-bold">ANSYS FEA</div>
+                                    <div>Front Impact Test</div>
+                                </div>
+                                <div class="bg-slate-950 light:bg-slate-100 p-1.5 rounded border border-slate-800 light:border-slate-200">
+                                    <div class="text-spartan-accent font-bold">Excel GD&T</div>
+                                    <div>Tolerance Stack-up</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Engineering Projects Gallery (5 Specific Projects) -->
+        <section id="projects" class="py-16 border-b border-slate-800 light:border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                    <div>
+                        <div class="text-xs font-mono text-spartan-accent uppercase tracking-widest mb-1">// Junior Year Projects</div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white light:text-slate-900">Featured Engineering Projects</h2>
+                        <p class="text-slate-400 light:text-slate-600 text-sm mt-1">Explore CAD renders, FEA heatmaps, and Excel models via the visual tabs on each card.</p>
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="mt-6 md:mt-0 flex flex-wrap gap-2" id="filter-buttons">
+                        <button onclick="filterProjects('all')" class="filter-btn active px-3 py-1.5 rounded border border-slate-700 text-xs font-mono transition">All 5 Projects</button>
+                        <button onclick="filterProjects('cad')" class="filter-btn px-3 py-1.5 rounded border border-slate-700 text-xs font-mono text-slate-300 light:text-slate-700 transition">CAD & FEA</button>
+                        <button onclick="filterProjects('excel')" class="filter-btn px-3 py-1.5 rounded border border-slate-700 text-xs font-mono text-slate-300 light:text-slate-700 transition">Excel & VBA</button>
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+
+                    <!-- PROJECT 1: MSU Baja SAE Chassis Design -->
+                    <div class="project-card technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-300 rounded-lg p-5 flex flex-col justify-between shadow-lg" data-category="cad">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                                <span class="text-spartan-accent font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-car-side"></i> MSU Baja SAE Team
+                                </span>
+                                <span>SolidWorks & ANSYS FEA</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">1. MSU Baja SAE Chassis Design & Structural FEA Analysis</h3>
+                            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                                SolidWorks 3D weldment frame modeling and ANSYS FEA front impact, side impact, and torsional rigidity simulation complying strictly with SAE Baja rulebook standards.
+                            </p>
+
+                            <!-- Interactive Visual Box -->
+                            <div class="relative bg-slate-950 rounded border border-slate-800 light:border-slate-300 overflow-hidden mb-4">
+                                <div id="p1-visual" class="h-56 w-full flex items-center justify-center p-4 relative">
+                                    <!-- View 1: CAD Weldment Render -->
+                                    <div id="p1-view-cad" class="view-panel w-full h-full flex flex-col items-center justify-center">
+                                        <svg class="w-full h-40 text-spartan-accent" viewBox="0 0 300 150" fill="none">
+                                            <path d="M40 100 L90 30 L210 30 L260 100 L220 130 L80 130 Z" stroke="currentColor" stroke-width="2.5" fill="rgba(24,69,59,0.1)"/>
+                                            <line x1="90" y1="30" x2="80" y2="130" stroke="currentColor" stroke-width="2"/>
+                                            <line x1="210" y1="30" x2="220" y2="130" stroke="currentColor" stroke-width="2"/>
+                                            <line x1="40" y1="100" x2="260" y2="100" stroke="#C2A649" stroke-width="1.5"/>
+                                            <text x="75" y="142" fill="#94a3b8" font-family="monospace" font-size="10">SolidWorks 3D Weldment Frame (1018 Steel)</text>
+                                        </svg>
+                                        <span class="text-[11px] font-mono text-slate-400">View: CAD 3D Weldment Assembly</span>
+                                    </div>
+
+                                    <!-- View 2: FEA Stress Heatmap -->
+                                    <div id="p1-view-fea" class="view-panel hidden w-full h-full flex flex-col items-center justify-center">
+                                        <svg class="w-full h-40" viewBox="0 0 300 150" fill="none">
+                                            <path d="M40 100 L90 30 L210 30 L260 100" stroke="#38bdf8" stroke-width="3"/>
+                                            <circle cx="90" cy="30" r="10" fill="#ef4444"/>
+                                            <circle cx="210" cy="30" r="6" fill="#eab308"/>
+                                            <text x="60" y="130" fill="#ef4444" font-family="monospace" font-size="10">Max Front Impact Stress: 210 MPa (Yield: 370 MPa)</text>
+                                        </svg>
+                                        <div class="fea-spectrum rounded"></div>
+                                        <span class="text-[11px] font-mono text-slate-400 mt-1">View: ANSYS Von Mises Stress Heatmap</span>
+                                    </div>
+
+                                    <!-- View 3: Tube Layout Drawing -->
+                                    <div id="p1-view-draw" class="view-panel hidden w-full h-full flex flex-col items-center justify-center bg-white text-slate-900 font-mono text-xs p-3">
+                                        <div class="w-full h-full border border-slate-900 p-2 flex flex-col justify-between">
+                                            <div class="font-bold border-b border-slate-900 pb-1 text-[10px]">SAE BAJA ROLL CAGE TUBE CUT LIST</div>
+                                            <div class="text-[9px] space-y-1 text-slate-700">
+                                                <div>• Primary Roll Hoop: 1.00 in OD x 0.120 in Wall</div>
+                                                <div>• Structural Bracing: 1.00 in OD x 0.065 in Wall</div>
+                                                <div>• Total Tubing Length: 114.2 ft</div>
+                                            </div>
+                                            <div class="text-[8px] text-right font-bold">DRWN BY: JIMMY (MSU ME)</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tabs -->
+                                <div class="bg-slate-900 border-t border-slate-800 p-1.5 flex justify-center gap-2 text-[10px] font-mono">
+                                    <button onclick="switchView('p1', 'cad')" class="px-2.5 py-1 rounded bg-spartan text-white">CAD Weldment</button>
+                                    <button onclick="switchView('p1', 'fea')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">FEA Heatmap</button>
+                                    <button onclick="switchView('p1', 'draw')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">Tube Drawing</button>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 mb-4 font-mono text-[11px]">
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">SolidWorks Weldments</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">ANSYS FEA</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">1018 Steel Tubing</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 light:border-slate-200 flex items-center justify-between font-mono text-xs">
+                            <button onclick="openModal('modal-p1')" class="text-spartan-light light:text-spartan font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> Inspect Engineering Specs
+                            </button>
+                            <span class="text-slate-500">MSU Baja SAE</span>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 2: Excel Dimensioning & Tolerancing (GD&T) Analysis Matrix -->
+                    <div class="project-card technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-300 rounded-lg p-5 flex flex-col justify-between shadow-lg" data-category="excel">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                                <span class="text-spartan-accent font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-ruler-combined"></i> Mechanical Design & GD&T
+                                </span>
+                                <span>ME 371 Course Work</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">2. Excel Dimensioning & Tolerancing (GD&T) Stack-Up Analysis Matrix</h3>
+                            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                                Automated Excel tool calculating Worst-Case and Root Sum Squared (RSS) tolerance stack-ups for multi-part mechanical assemblies with interactive clearance controls.
+                            </p>
+
+                            <!-- Interactive Visual Box -->
+                            <div class="relative bg-slate-950 rounded border border-slate-800 light:border-slate-300 overflow-hidden mb-4">
+                                <div id="p2-visual" class="h-56 w-full flex items-center justify-center p-4 relative">
+                                    <!-- View 1: Excel Dashboard -->
+                                    <div id="p2-view-excel" class="view-panel w-full h-full flex flex-col items-center justify-center p-2 font-mono text-xs bg-slate-900/90 text-slate-200">
+                                        <div class="w-full border border-spartan-accent p-2.5 rounded bg-slate-950">
+                                            <div class="flex justify-between border-b border-slate-700 pb-1 mb-1 text-spartan-gold font-bold text-[11px]">
+                                                <span>GD&T TOLERANCE STACK-UP MATRIX</span>
+                                                <span>ASME Y14.5</span>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[10px]">
+                                                <div>Nominal Gap: <span class="text-emerald-400">1.250 mm</span></div>
+                                                <div>Worst-Case Max: <span class="text-amber-400">1.820 mm</span></div>
+                                                <div>Worst-Case Min: <span class="text-emerald-400">0.680 mm</span></div>
+                                                <div>RSS Standard Dev: <span class="text-sky-400">±0.185 mm</span></div>
+                                            </div>
+                                        </div>
+                                        <span class="text-[11px] font-mono text-slate-400 mt-2">View: Automated Excel Stack-Up Calculator</span>
+                                    </div>
+
+                                    <!-- View 2: Stack Diagram -->
+                                    <div id="p2-view-stack" class="view-panel hidden w-full h-full flex flex-col items-center justify-center">
+                                        <svg class="w-full h-40 text-spartan-accent" viewBox="0 0 300 150" fill="none">
+                                            <rect x="20" y="40" width="70" height="70" stroke="#38bdf8" stroke-width="2"/>
+                                            <rect x="90" y="40" width="80" height="70" stroke="#C2A649" stroke-width="2"/>
+                                            <rect x="170" y="40" width="90" height="70" stroke="#ef4444" stroke-width="2"/>
+                                            <text x="80" y="130" fill="#94a3b8" font-family="monospace" font-size="10">Component Tolerance Loop (Part A + B + C)</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900 border-t border-slate-800 p-1.5 flex justify-center gap-2 text-[10px] font-mono">
+                                    <button onclick="switchView('p2', 'excel')" class="px-2.5 py-1 rounded bg-spartan text-white">Excel Dashboard</button>
+                                    <button onclick="switchView('p2', 'stack')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">Stack Diagram</button>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 mb-4 font-mono text-[11px]">
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Advanced Excel</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">ASME Y14.5 GD&T</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">RSS / Worst-Case</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 light:border-slate-200 flex items-center justify-between font-mono text-xs">
+                            <button onclick="openModal('modal-p2')" class="text-spartan-light light:text-spartan font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> View GD&T Calculations
+                            </button>
+                            <span class="text-slate-500">ME 371</span>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 3: Machine Downtime KPI Tracker (Excel VBA) -->
+                    <div class="project-card technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-300 rounded-lg p-5 flex flex-col justify-between shadow-lg" data-category="excel">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                                <span class="text-spartan-accent font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-chart-line"></i> Manufacturing Operations
+                                </span>
+                                <span>VBA Macro Software</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">3. Machine Downtime KPI Tracker & Root Cause Analyzer</h3>
+                            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                                Interactive Excel VBA macro application generating dynamic Pareto failure charts, MTBF/MTTR reliability metrics, and operator event entry UserForms.
+                            </p>
+
+                            <!-- Interactive Visual Box -->
+                            <div class="relative bg-slate-950 rounded border border-slate-800 light:border-slate-300 overflow-hidden mb-4">
+                                <div id="p3-visual" class="h-56 w-full flex items-center justify-center p-4 relative">
+                                    <!-- View 1: Pareto Chart -->
+                                    <div id="p3-view-pareto" class="view-panel w-full h-full flex flex-col items-center justify-center font-mono text-xs text-slate-200">
+                                        <svg class="w-full h-36" viewBox="0 0 300 120" fill="none">
+                                            <!-- Pareto Bar Chart Graphic -->
+                                            <rect x="30" y="20" width="35" height="80" fill="#18453B" stroke="#2c7a69"/>
+                                            <rect x="75" y="45" width="35" height="55" fill="#18453B" stroke="#2c7a69"/>
+                                            <rect x="120" y="70" width="35" height="30" fill="#18453B" stroke="#2c7a69"/>
+                                            <rect x="165" y="85" width="35" height="15" fill="#18453B" stroke="#2c7a69"/>
+                                            <path d="M47 30 L92 20 L137 15 L182 10" stroke="#C2A649" stroke-width="2"/>
+                                            <text x="30" y="115" fill="#94a3b8" font-size="8">Hydraulic</text>
+                                            <text x="75" y="115" fill="#94a3b8" font-size="8">Bearing</text>
+                                            <text x="120" y="115" fill="#94a3b8" font-size="8">Motor</text>
+                                            <text x="165" y="115" fill="#94a3b8" font-size="8">Sensor</text>
+                                        </svg>
+                                        <span class="text-[11px] font-mono text-slate-400">View: Automated Pareto Failure Root Cause Chart</span>
+                                    </div>
+
+                                    <!-- View 2: UserForm -->
+                                    <div id="p3-view-form" class="view-panel hidden w-full h-full flex flex-col items-center justify-center p-2 font-mono text-xs bg-slate-900 text-slate-200">
+                                        <div class="w-full border border-slate-700 p-2 rounded bg-slate-950">
+                                            <div class="text-spartan-gold font-bold border-b border-slate-800 pb-1 mb-2 text-[10px]">VBA DOWNTIME LOG ENTRY USERFORM</div>
+                                            <div class="space-y-1 text-[9px] text-slate-400">
+                                                <div>• Machine ID: [ Mill-04 ]</div>
+                                                <div>• Failure Category: [ Bearing Wear ]</div>
+                                                <div>• Downtime Duration: [ 45 mins ]</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900 border-t border-slate-800 p-1.5 flex justify-center gap-2 text-[10px] font-mono">
+                                    <button onclick="switchView('p3', 'pareto')" class="px-2.5 py-1 rounded bg-spartan text-white">Pareto Chart</button>
+                                    <button onclick="switchView('p3', 'form')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">VBA UserForm</button>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 mb-4 font-mono text-[11px]">
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Excel VBA Macros</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">MTBF / MTTR</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Operations Data</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 light:border-slate-200 flex items-center justify-between font-mono text-xs">
+                            <button onclick="openModal('modal-p3')" class="text-spartan-light light:text-spartan font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> Inspect VBA Architecture
+                            </button>
+                            <span class="text-slate-500">Makerspace</span>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 4: Parametric SolidWorks Bolt Model Generator -->
+                    <div class="project-card technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-300 rounded-lg p-5 flex flex-col justify-between shadow-lg" data-category="cad">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                                <span class="text-spartan-accent font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> CAD Automation & Tooling
+                                </span>
+                                <span>SolidWorks Design Tables</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">4. Parametric SolidWorks Bolt & Fastener Model Generator</h3>
+                            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                                Equation-driven SolidWorks model & Design Table macro generating standard metric (M3–M20) and imperial fasteners with custom pitch and drive heads in seconds.
+                            </p>
+
+                            <!-- Interactive Visual Box -->
+                            <div class="relative bg-slate-950 rounded border border-slate-800 light:border-slate-300 overflow-hidden mb-4">
+                                <div id="p4-visual" class="h-56 w-full flex items-center justify-center p-4 relative">
+                                    <!-- View 1: Rendered Bolt Family -->
+                                    <div id="p4-view-cad" class="view-panel w-full h-full flex flex-col items-center justify-center">
+                                        <svg class="w-full h-40 text-spartan-accent" viewBox="0 0 300 150" fill="none">
+                                            <polygon points="110,20 190,20 220,50 190,80 110,80 80,50" stroke="currentColor" stroke-width="2" fill="rgba(24,69,59,0.2)"/>
+                                            <rect x="135" y="80" width="30" height="60" stroke="#C2A649" stroke-width="2"/>
+                                            <line x1="135" y1="95" x2="165" y2="90" stroke="#ef4444" stroke-width="1.5"/>
+                                            <line x1="135" y1="110" x2="165" y2="105" stroke="#ef4444" stroke-width="1.5"/>
+                                            <line x1="135" y1="125" x2="165" y2="120" stroke="#ef4444" stroke-width="1.5"/>
+                                            <text x="80" y="145" fill="#94a3b8" font-family="monospace" font-size="10">SolidWorks Equation-Driven Thread Pitch</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 mb-4 font-mono text-[11px]">
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">SolidWorks API</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Design Tables</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Parametric CAD</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 light:border-slate-200 flex items-center justify-between font-mono text-xs">
+                            <button onclick="openModal('modal-p4')" class="text-spartan-light light:text-spartan font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> Inspect Fastener Parameters
+                            </button>
+                            <span class="text-slate-500">ME CAD Tooling</span>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 5: Personal Student Productivity & Grade Tracker -->
+                    <div class="project-card technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-300 rounded-lg p-5 flex flex-col justify-between shadow-lg" data-category="excel">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                                <span class="text-spartan-accent font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-graduation-cap"></i> Personal Engineering Tool
+                                </span>
+                                <span>Excel VBA Application</span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">5. Personal Student Productivity & Grade Projection Tracker</h3>
+                            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                                Dynamic Excel application managing engineering assignments, exam weightings, study hours log, and real-time GPA projections for MSU courses.
+                            </p>
+
+                            <!-- Interactive Visual Box -->
+                            <div class="relative bg-slate-950 rounded border border-slate-800 light:border-slate-300 overflow-hidden mb-4">
+                                <div id="p5-visual" class="h-56 w-full flex items-center justify-center p-4 relative">
+                                    <div id="p5-view-excel" class="view-panel w-full h-full flex flex-col items-center justify-center p-2 font-mono text-xs text-slate-200">
+                                        <div class="w-full border border-spartan p-2.5 rounded bg-slate-900">
+                                            <div class="flex justify-between border-b border-slate-700 pb-1 mb-1 text-spartan-gold font-bold text-[10px]">
+                                                <span>MSU JUNIOR GRADE PLANNER</span>
+                                                <span>PROJECTED GPA: 3.82</span>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[9px]">
+                                                <div>• ME 371 Mech Design: <span class="text-emerald-400">4.0</span></div>
+                                                <div>• ME 222 Deformable Solids: <span class="text-emerald-400">3.5</span></div>
+                                                <div>• ME 361 Dynamics: <span class="text-emerald-400">4.0</span></div>
+                                                <div>• STAT 351 Prob & Stat: <span class="text-emerald-400">3.5</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 mb-4 font-mono text-[11px]">
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Excel / VBA</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">GPA Modeling</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 light:bg-slate-100 text-slate-300 light:text-slate-700 border border-slate-700 light:border-slate-300">Task Planner</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800 light:border-slate-200 flex items-center justify-between font-mono text-xs">
+                            <button onclick="openModal('modal-p5')" class="text-spartan-light light:text-spartan font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> Inspect Productivity Engine
+                            </button>
+                            <span class="text-slate-500">Personal Project</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Capabilities & Shop Skills -->
+        <section id="skills" class="py-16 border-b border-slate-800 light:border-slate-200 bg-slate-900/40 light:bg-slate-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="mb-10">
+                    <div class="text-xs font-mono text-spartan-accent uppercase tracking-widest mb-1">// Skill Set</div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white light:text-slate-900">Engineering Software & Shop Capabilities</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- CAD & FEA Tools -->
+                    <div class="bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg p-5">
+                        <div class="text-spartan-accent font-mono text-xs font-bold uppercase mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-cube text-base"></i> CAD & Simulation
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 light:text-slate-700">
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">SolidWorks 2025:</span> 3D Weldments, Motion Analysis, Equations</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">ANSYS Mechanical FEA:</span> Impact Stress, Torsional Rigidity</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">GD&T (ASME Y14.5):</span> Tolerance Stack-ups, Feature Controls</li>
+                        </ul>
+                    </div>
+
+                    <!-- Excel & Computational Computing -->
+                    <div class="bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg p-5">
+                        <div class="text-spartan-accent font-mono text-xs font-bold uppercase mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel text-base"></i> Computing & Data
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 light:text-slate-700">
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">Advanced Excel:</span> VBA Macros, Dynamic Arrays, Solver Engine</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">MATLAB:</span> Kinematic Solvers, Differential Equations</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">Statistical Quality:</span> MTBF/MTTR, Pareto Analysis</li>
+                        </ul>
+                    </div>
+
+                    <!-- Shop & Prototyping -->
+                    <div class="bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg p-5">
+                        <div class="text-spartan-accent font-mono text-xs font-bold uppercase mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-screwdriver-wrench text-base"></i> Machine Shop & Prototype
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 light:text-slate-700">
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">Machine Shop:</span> Manual Lathe, Knee Mill, Band Saws, Tube Notchers</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">3D Printing:</span> Prusa FDM, SLA Resin, PETG/PLA Prototyping</li>
+                            <li class="p-2 bg-slate-950 light:bg-slate-50 rounded border border-slate-800 light:border-slate-200"><span class="text-spartan-gold font-bold">MSU Coursework:</span> ME 371 Design, ME 222 Deformable Solids, ME 361 Dynamics</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Activities & Work Experience -->
+        <section id="experience" class="py-16 border-b border-slate-800 light:border-slate-200">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="mb-10">
+                    <div class="text-xs font-mono text-spartan-accent uppercase tracking-widest mb-1">// Involvement</div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white light:text-slate-900">Activities & Shop Experience</h2>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <!-- Activity 1 -->
+                    <div class="technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-6 rounded-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white light:text-slate-900">MSU Baja SAE Racing Team Member</h3>
+                            <span class="text-xs font-mono text-spartan-accent font-bold">Sept 2023 – Present</span>
+                        </div>
+                        <div class="text-xs font-mono text-slate-400 mb-4">Michigan State University College of Engineering</div>
+                        <ul class="list-disc list-inside text-sm text-slate-300 light:text-slate-600 space-y-2 leading-relaxed">
+                            <li>Participate in CAD modeling and structural FEA testing of the off-road vehicle roll cage.</li>
+                            <li>Operate tube notchers, bandsaws, and manual mills to fabricate steel chassis members.</li>
+                            <li>Collaborate on SAE rulebook structural compliance documentation.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Activity 2 -->
+                    <div class="technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 p-6 rounded-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white light:text-slate-900">MSU Engineering Makerspace Assistant</h3>
+                            <span class="text-xs font-mono text-spartan-accent font-bold">Jan 2024 – Present</span>
+                        </div>
+                        <div class="text-xs font-mono text-slate-400 mb-4">MSU CoE Makerspace | East Lansing, MI</div>
+                        <ul class="list-disc list-inside text-sm text-slate-300 light:text-slate-600 space-y-2 leading-relaxed">
+                            <li>Assist students with 3D printer slicing (PrusaSlicer), hand tools, and metrology instruments.</li>
+                            <li>Maintain shop safety and organize CAD prototyping workstations.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-slate-900/60 light:bg-slate-100/60">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <div class="text-xs font-mono text-spartan-accent uppercase tracking-widest mb-1">// Get In Touch</div>
+                    <h2 class="text-3xl font-extrabold text-white light:text-slate-900">Contact Jimmy</h2>
+                    <p class="text-slate-400 light:text-slate-600 text-sm mt-2">Open to Mechanical Engineering Summer Internships & Co-ops.</p>
+                </div>
+
+                <div class="technical-card bg-slate-900 light:bg-white border border-slate-800 light:border-slate-200 rounded-lg p-6 sm:p-8 shadow-xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-base font-bold font-mono text-white light:text-slate-900 mb-4">// Direct Engineering Contact</h3>
+                            <div class="space-y-4 font-mono text-xs">
+                                <div class="flex items-center gap-3 text-slate-300 light:text-slate-700">
+                                    <div class="w-8 h-8 rounded bg-spartan/20 flex items-center justify-center text-spartan-accent">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <span>jimmy.me@msu.edu</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-slate-300 light:text-slate-700">
+                                    <div class="w-8 h-8 rounded bg-spartan/20 flex items-center justify-center text-spartan-accent">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <span>Engineering Building, MSU, East Lansing MI</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-slate-300 light:text-slate-700">
+                                    <div class="w-8 h-8 rounded bg-spartan/20 flex items-center justify-center text-spartan-accent">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                    </div>
+                                    <span>linkedin.com/in/jimmy-msu-me</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form -->
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-3 font-mono">
+                            <div>
+                                <label for="c-name" class="block text-xs text-slate-300 light:text-slate-700 mb-1">Recruiter Name / Company</label>
+                                <input type="text" id="c-name" required class="w-full bg-slate-950 light:bg-slate-50 border border-slate-800 light:border-slate-300 rounded px-3 py-2 text-xs text-white light:text-slate-900 focus:outline-none focus:border-spartan">
+                            </div>
+                            <div>
+                                <label for="c-email" class="block text-xs text-slate-300 light:text-slate-700 mb-1">Email</label>
+                                <input type="email" id="c-email" required class="w-full bg-slate-950 light:bg-slate-50 border border-slate-800 light:border-slate-300 rounded px-3 py-2 text-xs text-white light:text-slate-900 focus:outline-none focus:border-spartan">
+                            </div>
+                            <div>
+                                <label for="c-msg" class="block text-xs text-slate-300 light:text-slate-700 mb-1">Message / Internship Opportunity</label>
+                                <textarea id="c-msg" rows="3" required class="w-full bg-slate-950 light:bg-slate-50 border border-slate-800 light:border-slate-300 rounded px-3 py-2 text-xs text-white light:text-slate-900 focus:outline-none focus:border-spartan resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 rounded bg-spartan hover:bg-spartan-light text-white font-bold text-xs transition border border-spartan-accent">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- LIGHTBOX MODALS FOR ALL 5 PROJECTS -->
+    <!-- MODAL 1: Baja Chassis -->
+    <div id="modal-p1" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 light:bg-white border border-slate-700 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal('modal-p1')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-xs font-mono text-spartan-accent font-bold uppercase mb-1">MSU Baja SAE Structural Specification</div>
+            <h3 class="text-2xl font-bold text-white light:text-slate-900 mb-3">MSU Baja SAE Chassis FEA & Impact Analysis</h3>
+            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                Full 3D weldment frame model built to SAE Baja rulebook standards. ANSYS static structural analysis conducted for 10G front impact and 5G side impact scenarios, ensuring frame safety factors remain above 2.0x.
+            </p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeModal('modal-p1')" class="px-4 py-2 bg-slate-800 rounded text-xs font-mono text-slate-300 hover:bg-slate-700">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: GD&T Matrix -->
+    <div id="modal-p2" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 light:bg-white border border-slate-700 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal('modal-p2')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-xs font-mono text-spartan-accent font-bold uppercase mb-1">ME 371 Mechanical Design</div>
+            <h3 class="text-2xl font-bold text-white light:text-slate-900 mb-3">Excel Tolerance Stack-Up Analysis Matrix</h3>
+            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                Automated matrix for calculating cumulative dimensional tolerances across multi-part mechanical assemblies using both Worst-Case and Root Sum Squared (RSS) statistical distribution models.
+            </p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeModal('modal-p2')" class="px-4 py-2 bg-slate-800 rounded text-xs font-mono text-slate-300 hover:bg-slate-700">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Downtime KPI -->
+    <div id="modal-p3" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 light:bg-white border border-slate-700 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal('modal-p3')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-xs font-mono text-spartan-accent font-bold uppercase mb-1">Manufacturing Operations</div>
+            <h3 class="text-2xl font-bold text-white light:text-slate-900 mb-3">Machine Downtime KPI Tracker & VBA Macro</h3>
+            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                Automated Excel macro tool tracking MTBF (Mean Time Between Failures) and MTTR (Mean Time To Repair). Features interactive UserForms and automatic Pareto chart generation for machine failure root causes.
+            </p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeModal('modal-p3')" class="px-4 py-2 bg-slate-800 rounded text-xs font-mono text-slate-300 hover:bg-slate-700">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: Bolt Generator -->
+    <div id="modal-p4" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 light:bg-white border border-slate-700 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal('modal-p4')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-xs font-mono text-spartan-accent font-bold uppercase mb-1">SolidWorks Design Automation</div>
+            <h3 class="text-2xl font-bold text-white light:text-slate-900 mb-3">Parametric Fastener & Bolt Generator</h3>
+            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                Equation-driven parametric SolidWorks part file paired with a Design Table macro, generating standard metric and imperial hex head, socket head, and button head cap screws automatically.
+            </p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeModal('modal-p4')" class="px-4 py-2 bg-slate-800 rounded text-xs font-mono text-slate-300 hover:bg-slate-700">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: Student Productivity Tracker -->
+    <div id="modal-p5" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 light:bg-white border border-slate-700 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <button onclick="closeModal('modal-p5')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-xs font-mono text-spartan-accent font-bold uppercase mb-1">Personal Engineering Tool</div>
+            <h3 class="text-2xl font-bold text-white light:text-slate-900 mb-3">Student Productivity & Grade Projection Spreadsheet</h3>
+            <p class="text-slate-300 light:text-slate-600 text-sm leading-relaxed mb-4">
+                Custom spreadsheet application built in Excel VBA designed specifically for MSU engineering course structures. Models assignment weightings, calculates required final exam scores for target GPAs, and tracks study time allocation.
+            </p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button onclick="closeModal('modal-p5')" class="px-4 py-2 bg-slate-800 rounded text-xs font-mono text-slate-300 hover:bg-slate-700">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 light:border-slate-200 py-6 bg-slate-950 light:bg-slate-100 text-xs text-slate-500 font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© <span id="current-year"></span> Jimmy | MSU Junior Mechanical Engineering | Go Green! 💚</p>
+            <div>
+                <a href="#hero" class="hover:text-spartan-accent transition">Back to top ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Dark / Light Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            document.documentElement.classList.toggle('light');
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+        });
+
+        // Mobile Nav Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Interactive Project View Tab Switcher
+        function switchView(projectId, viewType) {
+            const container = document.getElementById(`${projectId}-visual`);
+            if (!container) return;
+
+            const panels = container.querySelectorAll('.view-panel');
+            panels.forEach(p => p.classList.add('hidden'));
+
+            const target = document.getElementById(`${projectId}-view-${viewType}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+        }
+
+        // Project Filter Handler
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (event) event.target.classList.add('active');
+
+            cards.forEach(card => {
+                const cats = card.getAttribute('data-category');
+                if (category === 'all' || (cats && cats.includes(category))) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Lightbox Modal Functions
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('c-name').value;
+            alert(`Thank you ${name}! Your inquiry has been sent to Jimmy. Go Green!`);
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
