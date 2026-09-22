@@ -16,6 +16,9 @@
 @media(max-width:720px){html{scroll-padding-top:80px}.container{width:calc(100% - 40px)}.header-inner{height:72px}.desktop-nav{display:none}.menu-toggle{display:block}.hero{padding:56px 0}.hero-layout{grid-template-columns:1fr;gap:40px}.hero h1{font-size:56px}.hero-subtitle{font-size:17px}.profile-note h2{font-size:28px;margin-bottom:20px}.section{padding:54px 0}.section-heading h2{font-size:36px}.section-heading{margin-bottom:25px}.project-grid,.skill-grid,.experience-layout,.contact-layout{grid-template-columns:1fr}.project-card{padding:23px}.project-description{min-height:0}.photo-box{height:200px}.project-meta{font-size:9px}.skill-grid{gap:24px}.experience-layout{gap:28px}.experience-meta{flex-direction:column;gap:5px}.contact{padding:54px 0}.contact h2{font-size:38px}.footer-inner{flex-direction:column;gap:8px}.dialog-content{padding:36px 24px}.dialog-content h2{font-size:27px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 @media print{.site-header,.filters,.view-tabs,.menu-toggle,.hero-actions,dialog{display:none!important}.container{width:100%}.hero,.section,.contact{padding:28px 0}.project-card{break-inside:avoid}.contact{background:white;color:var(--ink)}.contact p:not(.eyebrow),.contact .eyebrow,.contact-links small{color:var(--muted)}.project-grid{gap:12px}.photo-box{height:130px}body{font-size:12px}}
+
+/* The title link covers the card; photo tabs and footer links remain independent. */
+.project-card{position:relative}.project-page-link::after{content:"";position:absolute;inset:0;border-radius:7px}.project-page-link:focus-visible{outline:none}.project-page-link:focus-visible::after{outline:3px solid #a1bbaa;outline-offset:4px}.project-card .view-tab,.project-footer a{position:relative;z-index:1}
 </style>
 </head>
 <body>
@@ -50,7 +53,7 @@
         <div class="section-heading"><div><p class="eyebrow">01 / Selected work</p><h2>Featured Engineering Projects</h2><p class="section-intro">Design, analysis, and automation — a selection of my engineering work.</p></div><div class="filters" role="group" aria-label="Filter projects"><button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All 6 Projects</button><button class="filter-btn" type="button" data-filter="cad" aria-pressed="false">CAD</button><button class="filter-btn" type="button" data-filter="excel" aria-pressed="false">Excel &amp; VBA</button></div></div>
         <div class="project-grid"><article class="project-card" data-category="cad">
               <div class="project-meta"><span>MSU Baja SAE Team</span><span>Siemens NX &amp; SolidWorks</span></div>
-              <h3>1. MSU Baja SAE Chassis Design</h3>
+              <h3><a class="project-page-link" href="project-baja-chassis.html">1. MSU Baja SAE Chassis Design</a></h3>
               <p class="project-description">Siemens NX Tube Geometry modeling complying strictly with SAE Baja rulebook standards.</p>
               <div id="p1-visual" class="project-visual"><div id="p1-view-cad" class="view-panel" >
                   <div class="photo-box">
@@ -85,10 +88,10 @@
                 </div></div>
               <div class="view-tabs"><button type="button" class="view-tab selected" aria-pressed="true" onclick="switchView(&#x27;p1&#x27;, &#x27;cad&#x27;)">CAD</button><button type="button" class="view-tab " aria-pressed="false" onclick="switchView(&#x27;p1&#x27;, &#x27;draw&#x27;)">Tube Drawing</button></div>
               <div class="tags"><span>SolidWorks Weldments</span><span>1018 Steel Tubing</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p1')">Inspect Engineering Specs<span aria-hidden="true"> ↗</span></button><span>MSU Baja SAE</span></div>
+              <div class="project-footer"><a class="text-link" href="project-baja-chassis.html">Inspect Engineering Specs<span aria-hidden="true"> ↗</span></a><span>MSU Baja SAE</span></div>
             </article><article class="project-card" data-category="excel">
               <div class="project-meta"><span>Mechanical Design &amp; GD&amp;T</span><span>Application Engineering Intern Project</span></div>
-              <h3>2. Excel Dimensioning &amp; Tolerancing (GD&amp;T) Stack-Up Analysis Matrix</h3>
+              <h3><a class="project-page-link" href="project-dimensional-analysis.html">2. Excel Dimensioning &amp; Tolerancing (GD&amp;T) Stack-Up Analysis Matrix</a></h3>
               <p class="project-description">Automated Excel tool calculating dimensional normal for product standardization stack-ups for production quality verification.</p>
               <div id="p2-visual" class="project-visual"><div id="p2-view-excel" class="view-panel" >
                   <div class="photo-box">
@@ -108,10 +111,10 @@
                 </div></div>
               <div class="view-tabs"><button type="button" class="view-tab selected" aria-pressed="true" onclick="switchView(&#x27;p2&#x27;, &#x27;excel&#x27;)">Excel Dashboard</button></div>
               <div class="tags"><span>Advanced Excel</span><span>ASME Y14.5 GD&amp;T</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p2')">View GD&amp;T Calculations<span aria-hidden="true"> ↗</span></button><span>Application Engineering Intern</span></div>
+              <div class="project-footer"><a class="text-link" href="project-dimensional-analysis.html">View GD&amp;T Calculations<span aria-hidden="true"> ↗</span></a><span>Application Engineering Intern</span></div>
             </article><article class="project-card" data-category="excel">
               <div class="project-meta"><span>Manufacturing Operations</span><span>VBA Macro Software</span></div>
-              <h3>3. Machine Downtime KPI Tracker &amp; Root Cause Analyzer</h3>
+              <h3><a class="project-page-link" href="project-downtime-tracker.html">3. Machine Downtime KPI Tracker &amp; Root Cause Analyzer</a></h3>
               <p class="project-description">Interactive Excel VBA macro application generating dynamic Power BI downtime charts, downtime KPI metrics, and operator event entry UserForms.</p>
               <div id="p3-visual" class="project-visual"><div id="p3-view-pareto" class="view-panel" >
                   <div class="photo-box">
@@ -146,10 +149,10 @@
                 </div></div>
               <div class="view-tabs"><button type="button" class="view-tab selected" aria-pressed="true" onclick="switchView(&#x27;p3&#x27;, &#x27;pareto&#x27;)">Power BI Chart</button><button type="button" class="view-tab " aria-pressed="false" onclick="switchView(&#x27;p3&#x27;, &#x27;form&#x27;)">VBA UserForm</button></div>
               <div class="tags"><span>Excel VBA Macros</span><span>Machine Downtime KPI Metrics</span><span>Operations Data</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p3')">Inspect VBA Architecture<span aria-hidden="true"> ↗</span></button><span>Continuous Improvement Engineering Intern</span></div>
+              <div class="project-footer"><a class="text-link" href="project-downtime-tracker.html">Inspect VBA Architecture<span aria-hidden="true"> ↗</span></a><span>Continuous Improvement Engineering Intern</span></div>
             </article><article class="project-card" data-category="cad">
               <div class="project-meta"><span>CAD Automation &amp; Tooling</span><span>SolidWorks Design Tables</span></div>
-              <h3>4. Parametric SolidWorks Bolt &amp; Fastener Model Generator</h3>
+              <h3><a class="project-page-link" href="project-fastener-generator.html">4. Parametric SolidWorks Bolt &amp; Fastener Model Generator</a></h3>
               <p class="project-description">Equation-driven SolidWorks model &amp; Design Table macro generating standard metric (M3–M20) and imperial fasteners with custom pitch and drive heads in seconds.</p>
               <div id="p4-visual" class="project-visual"><div id="p4-view-cad" class="view-panel" >
                   <div class="photo-box">
@@ -169,10 +172,10 @@
                 </div></div>
               <div class="view-tabs"></div>
               <div class="tags"><span>SolidWorks API</span><span>Design Tables</span><span>Parametric CAD</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p4')">Inspect Fastener Parameters<span aria-hidden="true"> ↗</span></button><span>ME CAD Tooling</span></div>
+              <div class="project-footer"><a class="text-link" href="project-fastener-generator.html">Inspect Fastener Parameters<span aria-hidden="true"> ↗</span></a><span>ME CAD Tooling</span></div>
             </article><article class="project-card" data-category="excel">
               <div class="project-meta"><span>Personal Engineering Tool</span><span>Excel VBA Application</span></div>
-              <h3>5. Personal Student Productivity &amp; Grade Projection Tracker</h3>
+              <h3><a class="project-page-link" href="project-grade-tracker.html">5. Personal Student Productivity &amp; Grade Projection Tracker</a></h3>
               <p class="project-description">Dynamic Excel application managing engineering assignments, exam weightings, study hours log, and real-time GPA projections for MSU courses.</p>
               <div id="p5-visual" class="project-visual"><div id="p5-view-excel" class="view-panel" >
                   <div class="photo-box">
@@ -192,10 +195,10 @@
                 </div></div>
               <div class="view-tabs"></div>
               <div class="tags"><span>Excel / VBA</span><span>GPA Modeling</span><span>Task Planner</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p5')">Inspect Productivity Engine<span aria-hidden="true"> ↗</span></button><span>Personal Project</span></div>
+              <div class="project-footer"><a class="text-link" href="project-grade-tracker.html">Inspect Productivity Engine<span aria-hidden="true"> ↗</span></a><span>Personal Project</span></div>
             </article><article class="project-card" data-category="cad excel">
               <div class="project-meta"><span>Engineering Discipline</span><span>Software / Tools Used</span></div>
-              <h3>6. Future Engineering Project Title</h3>
+              <h3><a class="project-page-link" href="project-future-project.html">6. Future Engineering Project Title</a></h3>
               <p class="project-description">Add project description here. Highlight key technical objectives, design goals, engineering methods, and measurable results.</p>
               <div id="p6-visual" class="project-visual"><div id="p6-view-primary" class="view-panel" >
                   <div class="photo-box">
@@ -230,7 +233,7 @@
                 </div></div>
               <div class="view-tabs"><button type="button" class="view-tab selected" aria-pressed="true" onclick="switchView(&#x27;p6&#x27;, &#x27;primary&#x27;)">Primary View</button><button type="button" class="view-tab " aria-pressed="false" onclick="switchView(&#x27;p6&#x27;, &#x27;secondary&#x27;)">Secondary View</button></div>
               <div class="tags"><span>Tool Skill 1</span><span>Tool Skill 2</span></div>
-              <div class="project-footer"><button type="button" class="text-link" onclick="openModal('modal-p6')">Inspect Details<span aria-hidden="true"> ↗</span></button><span>Project Affiliation</span></div>
+              <div class="project-footer"><a class="text-link" href="project-future-project.html">Inspect Details<span aria-hidden="true"> ↗</span></a><span>Project Affiliation</span></div>
             </article></div>
       </div>
     </section>
@@ -238,7 +241,7 @@
     <section id="experience" class="section experience"><div class="container experience-layout"><div><p class="eyebrow">03 / Experience</p><h2>Engineering<br>in practice.</h2></div><div class="experience-item"><h3>MSU Baja SAE Racing Chassis Design Lead</h3><div class="experience-meta"><span>Michigan State University College of Engineering</span><span>Sept 2026 – Present</span></div><ul><li>Participate in CAD modeling of the off-road vehicle roll cage.</li><li>Operate tube notchers, bandsaws, and manual mills to fabricate steel chassis members.</li><li>Collaborate on SAE rulebook structural compliance documentation.</li></ul></div></div></section>
     <section id="contact" class="contact"><div class="container contact-layout"><div><p class="eyebrow">04 / Contact</p><h2>Let’s start a conversation.</h2><p>Open to Mechanical Engineering Summer Internships &amp; Co-ops.</p></div><div class="contact-links"><a href="mailto:jimmtamburrini@gmail.com">Jimtamburrini@gmail.com ↗</a><a href="https://www.linkedin.com/in/jimmy-tamburrini" target="_blank" rel="noopener noreferrer">Connect on LinkedIn ↗</a><small>Engineering Building, MSU · East Lansing, MI</small></div></div></section>
   </main>
-  <dialog id="modal-p1" aria-labelledby="modal-title-1"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p1')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-1">MSU Baja SAE Chassis FEA &amp; Impact Analysis</h2><p>Full 3D weldment frame model built to SAE Baja rulebook standards. ANSYS static structural analysis conducted for 10G front impact and 5G side impact scenarios, ensuring frame safety factors remain above 2.0x.</p><button type="button" class="button secondary" onclick="closeModal('modal-p1')">Close Window</button></div></dialog><dialog id="modal-p2" aria-labelledby="modal-title-2"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p2')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-2">Excel Dimensional Standard Analysis Matrix</h2><p>Automated matrix for calculating cumulative dimensional standards across multiple part families for quality verification.</p><button type="button" class="button secondary" onclick="closeModal('modal-p2')">Close Window</button></div></dialog><dialog id="modal-p3" aria-labelledby="modal-title-3"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p3')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-3">Machine Downtime KPI Tracker &amp; VBA Macro</h2><p>Automated Excel macro tool tracking MTBF (Mean Time Between Failures) and MTTR (Mean Time To Repair). Features interactive UserForms and automatic Pareto chart generation for machine failure root causes.</p><button type="button" class="button secondary" onclick="closeModal('modal-p3')">Close Window</button></div></dialog><dialog id="modal-p4" aria-labelledby="modal-title-4"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p4')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-4">Parametric Fastener &amp; Bolt Generator</h2><p>Equation-driven parametric SolidWorks part file paired with a Design Table macro, generating standard metric and imperial hex head, socket head, and button head cap screws automatically.</p><button type="button" class="button secondary" onclick="closeModal('modal-p4')">Close Window</button></div></dialog><dialog id="modal-p5" aria-labelledby="modal-title-5"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p5')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-5">Student Productivity &amp; Grade Projection Spreadsheet</h2><p>Custom spreadsheet application built in Excel VBA designed specifically for MSU engineering course structures. Models assignment weightings, calculates required final exam scores for target GPAs, and tracks study time allocation.</p><button type="button" class="button secondary" onclick="closeModal('modal-p5')">Close Window</button></div></dialog><dialog id="modal-p6" aria-labelledby="modal-title-6"><div class="dialog-content"><button class="dialog-close" type="button" onclick="closeModal('modal-p6')" aria-label="Close project details">×</button><p class="eyebrow">Project details</p><h2 id="modal-title-6">Future Engineering Project Title</h2><p>Detailed modal description placeholder. Expand on methodology, engineering analysis, constraints, tools, and project outcomes.</p><button type="button" class="button secondary" onclick="closeModal('modal-p6')">Close Window</button></div></dialog>
+  
   <footer class="site-footer"><div class="container footer-inner"><span>© <span id="current-year"></span> Jimmy Tamburrini · Mechanical Engineering</span><a href="#about">Back to top ↑</a></div></footer>
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -269,12 +272,7 @@
         button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected));
       });
     }
-    function openModal(id) { document.getElementById(id).showModal(); }
-    function closeModal(id) { document.getElementById(id).close(); }
-    document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
-      const rect = dialog.getBoundingClientRect();
-      if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
-    }));
+
   </script>
 </body>
 </html>
